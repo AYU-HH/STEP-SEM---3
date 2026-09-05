@@ -1,13 +1,9 @@
 public class Account {
-
-    // ===== Constants =====
     private static final double MIN_BALANCE_SAVINGS = 500.0;
     private static final double MIN_BALANCE_CURRENT = 1000.0;
     private static final int MIN_AGE = 18;
     private static final int MIN_PIN = 1000;
     private static final int MAX_PIN = 9999;
-
-    // ===== Fields =====
     private int accountNumber;
     private String name;
     private int age;
@@ -15,31 +11,19 @@ public class Account {
     private String accountType;
     private String status;
     private Integer pin;
-
-    // ===== Constructor =====
     public Account(int accountNumber, String name, int age, double initialBalance, String accountType)
             throws IllegalArgumentException {
-
-        // Validate age (must be >= 18)
         if (age < MIN_AGE) {
             throw new IllegalArgumentException("Invalid age: " + age + ". Age must be at least " + MIN_AGE + " years old.");
         }
-
-        // Validate account type (must be "Savings" or "Current")
         if (!"Savings".equalsIgnoreCase(accountType) && !"Current".equalsIgnoreCase(accountType)) {
             throw new IllegalArgumentException("Invalid account type: \"" + accountType + "\". Must be \"Savings\" or \"Current\".");
         }
-
-        // Standardize account type string
         String normalizedType = "Current".equalsIgnoreCase(accountType) ? "Current" : "Savings";
-
-        // Validate minimum balance based on account type
         double requiredMinBalance = "Current".equalsIgnoreCase(normalizedType) ? MIN_BALANCE_CURRENT : MIN_BALANCE_SAVINGS;
         if (initialBalance < requiredMinBalance) {
             throw new IllegalArgumentException("Initial balance ₹" + initialBalance + " is below minimum required balance ₹" + requiredMinBalance + " for " + normalizedType + " account.");
         }
-
-        // Initialize all fields
         this.accountNumber = accountNumber;
         this.name = name;
         this.age = age;
@@ -48,8 +32,6 @@ public class Account {
         this.status = "Active";
         this.pin = null;
     }
-
-    // ===== Business Methods =====
     public void deposit(double amount) throws InvalidAmountException, InactiveAccountException {
         validateActive();
         if (amount <= 0) {
@@ -98,8 +80,6 @@ public class Account {
         }
         this.balance -= amount;
     }
-
-    // ===== Account Status Management =====
     public void closeAccount() throws IllegalStateException {
         if ("Inactive".equalsIgnoreCase(this.status)) {
             throw new IllegalStateException("Account #" + accountNumber + " is already closed.");
@@ -113,8 +93,6 @@ public class Account {
         }
         this.status = "Active";
     }
-
-    // ===== PIN Management =====
     public void setPin(int pin) throws IllegalArgumentException {
         if (pin < MIN_PIN || pin > MAX_PIN) {
             throw new IllegalArgumentException("PIN must be a 4-digit number (1000-9999). Provided: " + pin);
@@ -133,7 +111,6 @@ public class Account {
         return this.pin != null;
     }
 
-    // ===== Helper Methods =====
     private double getMinimumBalance() {
         if ("Current".equalsIgnoreCase(this.accountType)) {
             return MIN_BALANCE_CURRENT;
@@ -147,7 +124,6 @@ public class Account {
         }
     }
 
-    // ===== Getters =====
     public int getAccountNumber() {
         return accountNumber;
     }
