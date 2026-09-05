@@ -1,6 +1,4 @@
-
 public class AccountEnhanced {
-
     private int accno;
     private String name;
     private int age;
@@ -8,7 +6,6 @@ public class AccountEnhanced {
     private String acctype;
     private String status;
     private Integer pin;
-
     public AccountEnhanced(int accountNumber, String name, int age, double initialBalance, String accountType) {
         this.accno = accountNumber;
         this.name = name;
@@ -37,15 +34,11 @@ public class AccountEnhanced {
 
     public boolean deposit(double amount) {
         if (!"Active".equalsIgnoreCase(this.status)) {
-            return false;
-        }
-        if (amount <= 0) {
-            return false;
-        }
+            return false;}
+        if (amount <= 0) {return false;}
         this.balance += amount;
         return true;
     }
-
     public boolean withdraw(double amount) {
         if (!"Active".equalsIgnoreCase(this.status)) {
             return false;
